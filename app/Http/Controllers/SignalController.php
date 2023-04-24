@@ -23,7 +23,6 @@ class SignalController extends Controller
      */
     public function version()
     {
-        dd("got here 2");
         $updates = (new SignalService())->version();
         return response()->json($updates, 200);
     }
@@ -108,7 +107,6 @@ class SignalController extends Controller
      */
     public function register(RegisterPhoneRequest $request)
     {
-        dd("got here");
         $input = $request->validated();
         $updates = (new SignalService())->register($input['captcha']);
         return response()->json($updates, 200);
