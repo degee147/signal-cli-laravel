@@ -130,15 +130,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "captcha",
-                        "in": "query",
-                        "description": "captcha",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
                     }
                 ],
                 "responses": {
