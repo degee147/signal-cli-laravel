@@ -59,21 +59,17 @@ class SignalService
 
     private function exec($command = 'signal-cli')
     {
-
-        $timeout = strtotime("+15 seconds");
-
-        // Execute the command and store the output in a variable
-        $output = shell_exec($command);
-
-        // Wait for the command to finish executing
-        while ($output == null) {
-            if (time() > $timeout) {
-                break;
-            }
-            sleep(1);
+        // $command = $command . " > /path/to/output.txt 2>&1";
+        $path = storage_path() . "/output.txt";
+        $command = $command . " > " . $path . " 2>&1";
+        $returnValue = null;
+        exec($command, $output, $returnValue);
+        if ($returnValue === 0) {
+            // echo "Command ran successfully";
+        } else {
+            // echo "Command failed to run";
         }
 
-        // Output the result
-        return $output;
+        return file_get_contents($path);
     }
 }
