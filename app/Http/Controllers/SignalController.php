@@ -162,16 +162,7 @@ class SignalController extends Controller
      *         @OA\Schema(
      *             type="string"
      *         )
-     *     ),
-     *    @OA\Parameter(
-     *         name="captcha",
-     *         in="query",
-     *         description="captcha",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
+     *     )
      * )
      */
     public function register(RegisterPhoneRequest $request)
