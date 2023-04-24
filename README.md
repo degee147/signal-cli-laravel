@@ -9,6 +9,6 @@ Pre-Steps
 
  API Documentation: http://127.0.0.1:8000/api/documentation
 
-Generate Captcha using from 
+Generate Captcha from 
 - https://signalcaptchas.org/registration/generate.html
 - or from https://signalcaptchas.org/challenge/generate.html

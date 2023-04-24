@@ -27,4 +27,11 @@ class RegisterPhoneRequest extends FormRequest
             'captcha' => ['required', 'string'],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'captcha.required' => 'The captcha field is required. Generate Captcha from https://signalcaptchas.org/registration/generate.html or from https://signalcaptchas.org/challenge/generate.html',
+        ];
+    }
 }
