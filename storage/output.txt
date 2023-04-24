@@ -1,1 +1,3 @@
-Failed to register: [429] Rate limit exceeded: 429
+WARN  MultiAccountManager - Ignoring +2348058582828: User is not registered. (NotRegisteredException)
+WARN  MultiAccountManager - Ignoring +2348030910338: User is not registered. (NotRegisteredException)
+signal-cli 0.11.8

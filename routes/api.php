@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //had to comment out ->prefix('api) from RouteServiceProvider class
 Route::prefix('/')->controller(SignalController::class)->group(function () {
     Route::post('/register', 'register')->name('register');
+    Route::get('/unregister', 'unregister')->name('unregister');
     Route::get('version', 'version')->name('version');
     Route::get('verify/{code}', 'verify')->name('verify');
     Route::get('receive', 'receive')->name('receive');

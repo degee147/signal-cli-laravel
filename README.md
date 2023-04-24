@@ -6,6 +6,9 @@ Pre-Steps
  Windows example: https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-do-I-install-Java-on-Windows)
 
 
+Set phone number in .env
+
+SIGNAL_PHONE="+2348012345678"
 
  API Documentation: http://127.0.0.1:8000/api/documentation
 

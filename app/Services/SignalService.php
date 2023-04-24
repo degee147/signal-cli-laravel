@@ -12,7 +12,6 @@ class SignalService
     public function __construct()
     {
         $this->phone = env('SIGNAL_PHONE');
-        ;
     }
 
     public function version()
@@ -59,17 +58,22 @@ class SignalService
 
     private function exec($command = 'signal-cli')
     {
-        // $command = $command . " > /path/to/output.txt 2>&1";
+
         $path = storage_path() . "/output.txt";
         $command = $command . " > " . $path . " 2>&1";
         $returnValue = null;
         exec($command, $output, $returnValue);
+
+        $response = [];
         if ($returnValue === 0) {
             // echo "Command ran successfully";
+            $response['success'] = true;
         } else {
+            $response['success'] = false;
             // echo "Command failed to run";
         }
+        $response['output'] = file_get_contents($path);
 
-        return file_get_contents($path);
+        return $response;
     }
 }

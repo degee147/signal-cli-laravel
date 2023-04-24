@@ -109,8 +109,16 @@ class SignalController extends Controller
     {
         $input = $request->validated();
         $updates = (new SignalService())->register($input['captcha']);
-        if ($updates == null) {
+        if ($updates['success']) {
             return $this->AppResponse('success', 'check your phone for otp verfication number', 200);
+        }
+        return response()->json($updates, 400);
+    }
+    public function unregister()
+    {
+        $updates = (new SignalService())->unregister();
+        if ($updates['success']) {
+            return $this->AppResponse('success', 'unregistered', 200);
         }
         return response()->json($updates, 400);
     }
