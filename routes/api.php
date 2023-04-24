@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SignalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+//had to comment out ->prefix('api) from RouteServiceProvider class
+Route::prefix('/')->controller(SignalController::class)->group(function () {
+    Route::get('/version', 'version')->name('version');
+    Route::get('/verify/{code}', 'verify')->name('verify');
+    Route::get('/receive', 'receive')->name('receive');
+    Route::post('/sendmessage', 'sendmessage')->name('sendmessage');
+    Route::post('/register', 'register')->name('register');
+    // Route::get('/', 'index')->name('showArticles');
+    // Route::get('/{id}', 'show')->name('singleArticle');
+    // Route::post('/{id}/comment', 'comment')->name('addComment');
+    // Route::get('/{id}/like', 'like')->name('addLike');
+    // Route::get('/{id}/view', 'view')->name('addView');
 });

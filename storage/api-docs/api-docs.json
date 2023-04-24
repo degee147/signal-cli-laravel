@@ -1,0 +1,63 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation for Signal Bot",
+        "description": "API documentation",
+        "contact": {
+            "email": "kenwaribo@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://localhost:8000/",
+            "description": "Returns App API"
+        }
+    ],
+    "paths": {
+        "/": {},
+        "/version": {
+            "get": {
+                "summary": "View installed version of Signal CLI",
+                "operationId": "f19245d4fa1003ff21b975ff983962f0",
+                "responses": {
+                    "200": {
+                        "description": "Everything OK"
+                    }
+                }
+            }
+        },
+        "/sendmessage": {
+            "post": {
+                "summary": "Send a message to user",
+                "description": "Send params in form-data. Add Accept:application/json in header",
+                "operationId": "sendmessage",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "receipient phone number",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "message",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        }
+    }
+}
