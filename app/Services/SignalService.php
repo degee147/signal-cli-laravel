@@ -9,9 +9,10 @@ class SignalService
 {
     public $phone;
 
-    public function __construct($phone = '')
+    public function __construct()
     {
-        $this->phone = $phone ?? env('SIGNAL_PHONE');;
+        $this->phone = env('SIGNAL_PHONE');
+        ;
     }
 
     public function version()
@@ -58,6 +59,21 @@ class SignalService
 
     private function exec($command = 'signal-cli')
     {
-        return shell_exec($command);
+
+        $timeout = strtotime("+15 seconds");
+
+        // Execute the command and store the output in a variable
+        $output = shell_exec($command);
+
+        // Wait for the command to finish executing
+        while ($output == null) {
+            if (time() > $timeout) {
+                break;
+            }
+            sleep(1);
+        }
+
+        // Output the result
+        return $output;
     }
 }

@@ -75,7 +75,7 @@ class SignalController extends Controller
         return response()->json($updates, 200);
     }
 
-     /**
+    /**
      * @OA\Post(
      *     path="/register",
      *     summary="Endpoint to register phone number. Number has to be set in .env because it's better to use one number at a time with signal",
@@ -109,7 +109,10 @@ class SignalController extends Controller
     {
         $input = $request->validated();
         $updates = (new SignalService())->register($input['captcha']);
-        return response()->json($updates, 200);
+        if ($updates == null) {
+            return $this->AppResponse('success', 'check your phone for otp verfication number', 200);
+        }
+        return response()->json($updates, 400);
     }
 
 }
