@@ -27,6 +27,40 @@
                 }
             }
         },
+        "/receive": {
+            "get": {
+                "summary": "Receieve unread messages",
+                "operationId": "25550291f427d9974d90ca86dd250dce",
+                "responses": {
+                    "200": {
+                        "description": "Everything OK"
+                    }
+                }
+            }
+        },
+        "/verify": {
+            "post": {
+                "summary": "Verify a registered phone number using otp from sms",
+                "description": "Send params in form-data. Add Accept:application/json in header",
+                "operationId": "verify",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "otp code",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/sendmessage": {
             "post": {
                 "summary": "Send a message to user",
@@ -46,6 +80,29 @@
                         "name": "message",
                         "in": "query",
                         "description": "message",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/profilename": {
+            "post": {
+                "summary": "Update profile name of registered phone number",
+                "description": "Send params in form-data. Add Accept:application/json in header",
+                "operationId": "profilename",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name string",
                         "required": true,
                         "schema": {
                             "type": "string"

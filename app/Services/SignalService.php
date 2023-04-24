@@ -21,12 +21,13 @@ class SignalService
 
     public function sendMessage($number, $message)
     {
-        return $this->exec("signal-cli -u " . $this->phone . " send -e -m " . $message . " " . $number);
+        return $this->exec('signal-cli -a ' . $this->phone . ' send -m "' . $message . '" ' . $number);
     }
 
     public function receiveMessages()
     {
-        return $this->exec("signal-cli -a " . $this->phone . " receive");
+        $output = $this->exec("signal-cli -a " . $this->phone . " receive");
+        return $output;
 
     }
     public function verify($code)
@@ -47,6 +48,11 @@ class SignalService
     public function unregister()
     {
         return $this->exec("signal-cli -a " . $this->phone . " unregister");
+    }
+    public function updateProfileName($name)
+    {
+        // signal-cli -a +2348058582828 updateProfile --given-name "The Mace Name"
+        return $this->exec("signal-cli -a " . $this->phone . ' updateProfile --given-name "' . $name . '"');
     }
 
     public function command($command)
