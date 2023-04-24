@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\SignalService;
+use App\Ultainfinity\Ultainfinity;
 use App\Http\Requests\SendMessageRequest;
 use App\Http\Requests\RegisterPhoneRequest;
 
 class SignalController extends Controller
 {
-
+    use Ultainfinity;
     /**
      * @OA\Get(
      *     path="/version",
