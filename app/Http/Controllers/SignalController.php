@@ -6,6 +6,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Services\SignalService;
 use App\Ultainfinity\Ultainfinity;
+use App\Http\Requests\CommandRequest;
 use App\Http\Requests\ProfileNameRequest;
 use App\Http\Requests\SendMessageRequest;
 use App\Http\Requests\VerificationRequest;
@@ -31,7 +32,7 @@ class SignalController extends Controller
         return response()->json($updates, 200);
     }
 
- /**
+    /**
      * @OA\Get(
      *     path="/command",
      *     summary="Send a custom command to the Signal CLI",
@@ -42,9 +43,10 @@ class SignalController extends Controller
      *     )
      * )
      */
-    public function command()
+    public function command(CommandRequest $request)
     {
-        $updates = (new SignalService())->version();
+        $input = $request->validated();
+        $updates = (new SignalService())->command($input['command']);
         return response()->json($updates, 200);
     }
 

@@ -27,5 +27,6 @@ Route::prefix('/')->controller(SignalController::class)->group(function () {
     Route::get('version', 'version')->name('version');
     Route::get('receive', 'receive')->name('receive');
     Route::post('sendmessage', 'sendmessage')->name('sendmessage');
+    Route::post('command', 'command')->name('command');
     Route::post('profilename', 'profilename')->name('profilename');
 });
