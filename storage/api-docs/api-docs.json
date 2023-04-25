@@ -27,6 +27,18 @@
                 }
             }
         },
+        "/command": {
+            "get": {
+                "summary": "Send a custom command to the Signal CLI",
+                "description": "List of available commands: addDevice,block,daemon,deleteLocalAccountData,getAttachment,getUserStatus,joinGroup,jsonRpc,link,listAccounts,listContacts,listDevices,listGroups,listIdentities,listStickerPacks,quitGroup,receive,register,remoteDelete,removeContact,removeDevice,removePin,send,sendContacts,sendPaymentNotification,sendReaction,sendReceipt,sendSyncRequest,sendTyping,setPin,submitRateLimitChallenge,trust,unblock,unregister,updateAccount,updateConfiguration,updateContact,updateGroup,updateProfile,uploadStickerPack,verify,version",
+                "operationId": "54faece60c58e9d497b5acf14fd7ef3e",
+                "responses": {
+                    "200": {
+                        "description": "Everything OK"
+                    }
+                }
+            }
+        },
         "/receive": {
             "get": {
                 "summary": "Receieve unread messages",
