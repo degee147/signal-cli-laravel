@@ -30,7 +30,7 @@ class signal extends Command
         // $option = $this->option('option');
         // php artisan app:signal
         $updates = (new SignalService())->receiveMessages();
-        echo "received";
+        echo json_encode($updates);
 
     }
 }
