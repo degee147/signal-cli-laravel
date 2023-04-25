@@ -62,11 +62,11 @@ class SignalController extends Controller
      */
     public function receive()
     {
-        // $updates = (new SignalService())->receiveMessages();
-        // return response()->json($updates, 200);
+        $updates = (new SignalService())->receiveMessages();
+        return response()->json($updates, 200);
 
-        $unreadMessages = Message::where('replied', false)->orderBy('id', 'asc')->paginate(10);
-        return response()->json($unreadMessages, 200);
+        // $unreadMessages = Message::where('replied', false)->orderBy('id', 'asc')->paginate(10);
+        // return response()->json($unreadMessages, 200);
 
     }
 
