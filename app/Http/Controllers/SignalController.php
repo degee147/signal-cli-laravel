@@ -14,6 +14,7 @@ use App\Http\Requests\RegisterPhoneRequest;
 class SignalController extends Controller
 {
     use Ultainfinity;
+
     /**
      * @OA\Get(
      *     path="/version",
@@ -25,6 +26,23 @@ class SignalController extends Controller
      * )
      */
     public function version()
+    {
+        $updates = (new SignalService())->version();
+        return response()->json($updates, 200);
+    }
+
+ /**
+     * @OA\Get(
+     *     path="/command",
+     *     summary="Send a custom command to the Signal CLI",
+     *     description="List of available commands: addDevice,block,daemon,deleteLocalAccountData,getAttachment,getUserStatus,joinGroup,jsonRpc,link,listAccounts,listContacts,listDevices,listGroups,listIdentities,listStickerPacks,quitGroup,receive,register,remoteDelete,removeContact,removeDevice,removePin,send,sendContacts,sendPaymentNotification,sendReaction,sendReceipt,sendSyncRequest,sendTyping,setPin,submitRateLimitChallenge,trust,unblock,unregister,updateAccount,updateConfiguration,updateContact,updateGroup,updateProfile,uploadStickerPack,verify,version",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Everything OK"
+     *     )
+     * )
+     */
+    public function command()
     {
         $updates = (new SignalService())->version();
         return response()->json($updates, 200);

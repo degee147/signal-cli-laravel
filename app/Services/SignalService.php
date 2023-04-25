@@ -140,7 +140,7 @@ class SignalService
     {
         //list of available commands
         //addDevice,block,daemon,deleteLocalAccountData,getAttachment,getUserStatus,joinGroup,jsonRpc,link,listAccounts,listContacts,listDevices,listGroups,listIdentities,listStickerPacks,quitGroup,receive,register,remoteDelete,removeContact,removeDevice,removePin,send,sendContacts,sendPaymentNotification,sendReaction,sendReceipt,sendSyncRequest,sendTyping,setPin,submitRateLimitChallenge,trust,unblock,unregister,updateAccount,updateConfiguration,updateContact,updateGroup,updateProfile,uploadStickerPack,verify,version
-        return $this->exec("signal-cli " . $command);
+        return $this->exec("signal-cli -a " . $this->phone . " " . $command);
     }
 
     private function exec($command = 'signal-cli')
