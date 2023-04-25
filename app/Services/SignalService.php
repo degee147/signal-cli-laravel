@@ -150,7 +150,7 @@ class SignalService
         $prefix = "";
 
         if (strpos($os, 'Linux') !== false) {
-            $prefix = "sudo ";
+            // $prefix = "sudo ";
         } elseif (strpos($os, 'Windows') !== false) {
             // echo 'This is a Windows system.';
         } elseif (strpos($os, 'Darwin') !== false) {
