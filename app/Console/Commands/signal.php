@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\SignalService;
 use Illuminate\Console\Command;
 
 class signal extends Command
@@ -25,6 +26,11 @@ class signal extends Command
      */
     public function handle()
     {
-        //
+        // $argument = $this->argument('argument');
+        // $option = $this->option('option');
+        // php artisan app:signal
+        $updates = (new SignalService())->receiveMessages();
+        echo "received";
+
     }
 }

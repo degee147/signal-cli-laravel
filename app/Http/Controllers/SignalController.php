@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Services\SignalService;
 use App\Ultainfinity\Ultainfinity;
@@ -41,8 +42,12 @@ class SignalController extends Controller
      */
     public function receive()
     {
-        $updates = (new SignalService())->receiveMessages();
-        return response()->json($updates, 200);
+        // $updates = (new SignalService())->receiveMessages();
+        // return response()->json($updates, 200);
+
+        $unreadMessages = Message::where('replied', false)->orderBy('id', 'asc')->paginate(10);
+        return response()->json($unreadMessages, 200);
+
     }
 
     /**
@@ -111,7 +116,12 @@ class SignalController extends Controller
     public function sendmessage(SendMessageRequest $request)
     {
         $input = $request->validated();
+
         $updates = (new SignalService())->sendMessage($input['phone'], $input['message']);
+        if ($updates['success']) {
+            //mark all sender's messages as replied
+            Message::where('sender', 'like', '%' . $input['phone'])->update(['replied' => true]);
+        }
         return response()->json($updates, 200);
     }
 

@@ -1,8 +1,0 @@
-Envelope from: “degee147” +2348030910338 (device: 1) to +2348058582828
-Timestamp: 1682345695158 (2023-04-24T14:14:55.158Z)
-Server timestamps: received: 1682345696376 (2023-04-24T14:14:56.376Z) delivered: 1682345706109 (2023-04-24T14:15:06.109Z)
-Sent by unidentified/sealed sender
-Message timestamp: 1682345695158 (2023-04-24T14:14:55.158Z)
-Body: What's good
-With profile key
-
