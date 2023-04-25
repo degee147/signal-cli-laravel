@@ -146,10 +146,23 @@ class SignalService
     private function exec($command = 'signal-cli')
     {
 
+        $os = PHP_OS;
+        $prefix = "";
+
+        if (strpos($os, 'Linux') !== false) {
+            $prefix = "sudo ";
+        } elseif (strpos($os, 'Windows') !== false) {
+            // echo 'This is a Windows system.';
+        } elseif (strpos($os, 'Darwin') !== false) {
+            // echo 'This is a Mac system.';
+        } else {
+            echo 'This is an unknown operating system.';
+        }
+
         $path = storage_path() . "/output.txt";
         $command = $command . " > " . $path . " 2>&1";
         $returnValue = null;
-        exec($command, $output, $returnValue);
+        exec($prefix . $command, $output, $returnValue);
 
         $response = [];
         if ($returnValue === 0) {
