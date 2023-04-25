@@ -156,7 +156,7 @@ class SignalService
         } elseif (strpos($os, 'Darwin') !== false) {
             // echo 'This is a Mac system.';
         } else {
-            echo 'This is an unknown operating system.';
+            // echo 'This is an unknown operating system.';
         }
 
         $path = storage_path() . "/output.txt";
