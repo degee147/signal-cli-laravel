@@ -96,7 +96,7 @@ class SignalController extends Controller
      *     @OA\Parameter(
      *         name="phone",
      *         in="query",
-     *         description="receipient phone number",
+     *         description="receipient phone number in international format e.g +23480312345678",
      *         required=true,
      *         @OA\Schema(
      *             type="string"
