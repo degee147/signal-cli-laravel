@@ -1,10 +1,38 @@
 <?php
 
-require 'Signal.php';
+use App\Services\SignalService;
+require  '../../app/Services/SignalService.php';
+
+// require 'Signal.php';
+// require __DIR__ . '..Signal.php';
+
 
 // $phone = "+2348058582828";
 $phone = "+2348067058555";
-$signal = new Signal($phone);
+// $signal = new Signal($phone);
+$signal = new SignalService($phone);
+
+
+
+
+function make_path($path_name)
+{
+
+    $dirPath = __DIR__ . $path_name;
+
+    // Check if the directory exists
+    if (!file_exists($dirPath)) {
+        // Create the directory
+        mkdir($dirPath, 0777, true);
+    }
+
+    $save_path = $dirPath . "/output" . mt_rand(11111, 99999) . ".txt";
+
+    // Open a file for reading and writing
+    $file = fopen($save_path, "w+");
+
+    return $save_path;
+}
 
 
 

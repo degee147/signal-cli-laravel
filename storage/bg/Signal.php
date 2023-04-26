@@ -16,15 +16,15 @@ class Signal
         return $this->exec("signal-cli version");
     }
 
-    public function sendMessage($number, $message)
+    public function sendMessage($number, $message, $save_path = "")
     {
-        return $this->exec('signal-cli -a ' . $this->phone . ' send -m "' . $message . '" ' . $number);
+        return $this->exec('signal-cli -a ' . $this->phone . ' send -m "' . $message . '" ' . $number, $save_path);
     }
 
-    public function receiveMessages()
+    public function receiveMessages($save_path)
     {
 
-        $response = $this->exec("signal-cli -a " . $this->phone . " receive");
+        $response = $this->exec("signal-cli -a " . $this->phone . " receive", $save_path);
 
         $output = $response['output'];
 
@@ -139,10 +139,13 @@ class Signal
         return $this->exec("signal-cli -a " . $this->phone . " " . $command);
     }
 
-    private function exec($command = 'signal-cli')
+    private function exec($command = 'signal-cli', $save_path = '')
     {
 
         $path = __DIR__ . "/output.txt";
+        if (!empty($save_path)) {
+            $path = $save_path;
+        }
         $command = $command . " > " . $path . " 2>&1";
         $returnValue = null;
         exec($command, $output, $returnValue);

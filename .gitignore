@@ -5,6 +5,10 @@
 /public/storage
 /storage/*.key
 /storage/*.txt
+/storage/bg/receive/*.txt
+/storage/bg/output/*.txt
+/storage/bg/send/*.txt
+/storage/bg/sentresponses/*.txt
 /vendor
 .env
 .env.backup

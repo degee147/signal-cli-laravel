@@ -10,25 +10,24 @@ class SignalService
 {
     public $phone;
 
-    public function __construct()
+    public function __construct($phone = "")
     {
-        $this->phone = env('SIGNAL_PHONE');
+        $this->phone = $phone ?? env('SIGNAL_PHONE');
     }
-
     public function version()
     {
         return $this->exec("signal-cli version");
     }
 
-    public function sendMessage($number, $message)
+    public function sendMessage($number, $message, $save_path = "")
     {
-        return $this->exec('signal-cli -a ' . $this->phone . ' send -m "' . $message . '" ' . $number);
+        return $this->exec('signal-cli -a ' . $this->phone . ' send -m "' . $message . '" ' . $number, $save_path);
     }
 
-    public function receiveMessages()
+    public function receiveMessages($save_path)
     {
 
-        $response = $this->exec("signal-cli -a " . $this->phone . " receive");
+        $response = $this->exec("signal-cli -a " . $this->phone . " receive", $save_path);
 
         $output = $response['output'];
 
@@ -143,26 +142,24 @@ class SignalService
         return $this->exec("signal-cli -a " . $this->phone . " " . $command);
     }
 
-    private function exec($command = 'signal-cli')
+    private function exec($command = 'signal-cli', $save_path = '')
     {
 
-        $prefix = "";
-        // if (PHP_OS == "Linux") {
-        //     $prefix = "sudo ";
-        // }
-
-        $path = storage_path() . "/output.txt";
+        $path = __DIR__ . "/output.txt";
+        if (!empty($save_path)) {
+            $path = $save_path;
+        }
         $command = $command . " > " . $path . " 2>&1";
         $returnValue = null;
-        exec($prefix . $command, $output, $returnValue);
+        exec($command, $output, $returnValue);
 
         $response = [];
         if ($returnValue === 0) {
-            //"Command ran successfully";
+            //  "Command ran successfully";
             $response['success'] = true;
         } else {
             $response['success'] = false;
-            //"Command failed to run";
+            //  "Command failed to run";
         }
         $response['output'] = file_get_contents($path);
         return $response;

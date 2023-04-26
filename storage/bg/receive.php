@@ -2,10 +2,11 @@
 
 require 'base.php';
 
-$response = $signal->receiveMessages();
+$save_path = make_path("/receive");
+$response = $signal->receiveMessages($save_path);
 
-if (!empty($response['output'])) {
+// if (!empty($response['output'])) {
 
-}
+// }
 
 echo json_encode($response);
