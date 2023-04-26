@@ -2,5 +2,10 @@
 
 require 'base.php';
 
-$output = $signal->receiveMessages();
-echo json_encode($output);
+$response = $signal->receiveMessages();
+
+if (!empty($response['output'])) {
+
+}
+
+echo json_encode($response);
