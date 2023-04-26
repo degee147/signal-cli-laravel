@@ -14,6 +14,7 @@ class signal extends Command
      */
     protected $signature = 'app:signal';
 
+
     /**
      * The console command description.
      *
@@ -26,6 +27,7 @@ class signal extends Command
      */
     public function handle()
     {
+        // Artisan::call('app:signal');
         // $argument = $this->argument('argument');
         // $option = $this->option('option');
         // php artisan app:signal
