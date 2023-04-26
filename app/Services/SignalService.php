@@ -147,9 +147,9 @@ class SignalService
     {
 
         $prefix = "";
-        if (PHP_OS == "Linux") {
-            $prefix = "sudo ";
-        }
+        // if (PHP_OS == "Linux") {
+        //     $prefix = "sudo ";
+        // }
 
         $path = storage_path() . "/output.txt";
         $command = $command . " > " . $path . " 2>&1";
