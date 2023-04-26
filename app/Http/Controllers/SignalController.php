@@ -29,8 +29,8 @@ class SignalController extends Controller
     public function version()
     {
         $updates = (new SignalService())->version();
-        return $updates;
-        // return response()->json($updates, 200);
+        // return $updates;
+        return response()->json($updates, 200);
     }
 
     /**
