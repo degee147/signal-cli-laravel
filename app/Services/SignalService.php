@@ -146,10 +146,15 @@ class SignalService
     private function exec($command = 'signal-cli')
     {
 
+        $prefix = "";
+        if (PHP_OS == "Linux") {
+            $prefix = "sudo ";
+        }
+
         $path = storage_path() . "/output.txt";
         $command = $command . " > " . $path . " 2>&1";
         $returnValue = null;
-        exec($command, $output, $returnValue);
+        exec($prefix . $command, $output, $returnValue);
 
         $response = [];
         if ($returnValue === 0) {
