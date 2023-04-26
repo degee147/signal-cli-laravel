@@ -67,7 +67,7 @@ class SignalController extends Controller
         // return response()->json($updates, 200);
 
         // $unreadMessages = Message::where('replied', false)->orderBy('id', 'asc')->paginate(10);
-        $unreadMessages = Message::where('replied', false)->orderBy('id', 'desc');
+        $unreadMessages = Message::where('replied', false)->orderBy('id', 'desc')->get();
         return response()->json($unreadMessages, 200);
 
     }
@@ -214,5 +214,7 @@ class SignalController extends Controller
         }
         return response()->json($updates, 400);
     }
+
+
 
 }

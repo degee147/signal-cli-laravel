@@ -24,20 +24,13 @@ class SignalService
         return $this->exec('signal-cli -a ' . $this->phone . ' send -m "' . $message . '" ' . $number, $save_path);
     }
 
-    public function receiveMessages($save_path)
+    public function saveMessages($file_path)
     {
+        $response = ["success" => true];
+        $saveCount = 0;
 
-        $response = $this->exec("signal-cli -a " . $this->phone . " receive", $save_path);
-
-        $output = $response['output'];
-
-        $lines = explode("\r\n", $output);
-
-        if (!is_array($lines)) {
-            // $response['messages'] = [];
-            return $response;
-        }
-        $messages = [];
+        // Open the file for reading
+        $file = fopen($file_path, "r");
 
         $sender = null;
         $receiver = null;
@@ -46,18 +39,39 @@ class SignalService
         $message_timestamp = null;
         $body = null;
 
+        // Loop through the file line by line
+        while (!feof($file)) {
+            $line = fgets($file);
+            // Do something with the line, such as print it
+            // echo $line;
 
-        foreach ($lines as $line) {
             if (str_contains($line, "Envelope from: ")) {
                 $sender = $this->get_string_between($line, "Envelope from:", "(");
-                $receiver = $this->get_string_after($line, ") to");
+
+                if (str_contains($line, "Timestamp")) {
+                    $receiver = $this->get_string_between($line, ") to", "Timestamp");
+                } else {
+                    $receiver = $this->get_string_after($line, ") to");
+                }
             }
             if (str_contains($line, "Server timestamps:")) {
                 $receive_timestamp = $this->get_string_between($line, "received:", "delivered:");
-                $delivered_timestamp = $this->get_string_after($line, "delivered:");
+
+                if (str_contains($line, "Sent by")) {
+                    $delivered_timestamp = $this->get_string_between($line, "delivered:", "Sent by");
+                } else {
+                    $delivered_timestamp = $this->get_string_after($line, "delivered:");
+                }
+
             }
             if (str_contains($line, "Message timestamp:")) {
-                $message_timestamp = $this->get_string_after($line, "Message timestamp:");
+
+                if (str_contains($line, "Body:")) {
+                    $message_timestamp = $this->get_string_between($line, "Message timestamp:", "Body:");
+                } else {
+                    $message_timestamp = $this->get_string_after($line, "Message timestamp:");
+                }
+
             }
             if (str_contains($line, "Body:")) {
                 $body = $this->get_string_after($line, "Body:");
@@ -74,7 +88,8 @@ class SignalService
                     'body' => $body,
                 ];
                 Message::create($message);
-                $messages[] = $message;
+                $saveCount++;
+                // $messages[] = $message;
 
                 $sender = null;
                 $receiver = null;
@@ -84,7 +99,18 @@ class SignalService
                 $body = null;
             }
         }
-        $response['output'] = $messages;
+
+        // Close the file
+        fclose($file);
+        $response['output'] = "saved " . $saveCount . " messages";
+        // $response['output'] = $messages;
+        // $response['success'] = $messages;
+        return $response;
+    }
+
+    public function receiveMessages($save_path)
+    {
+        $response = $this->exec("signal-cli -a " . $this->phone . " receive", $save_path);
         return $response;
     }
 
@@ -96,14 +122,16 @@ class SignalService
             return '';
         $ini += strlen($start);
         $len = strpos($string, $end, $ini) - $ini;
-        return trim(substr($string, $ini, $len));
+        $str = trim(substr($string, $ini, $len));
+        return str_replace("With profile key", "", $str);
     }
     private function get_string_after($string, $needle)
     {
         $position = strpos($string, $needle);
         if ($position !== false) {
             $result = substr($string, $position + strlen($needle));
-            return trim($result);
+            $str = trim($result);
+            return str_replace("With profile key", "", $str);
         }
 
         return "";
@@ -164,4 +192,6 @@ class SignalService
         $response['output'] = file_get_contents($path);
         return $response;
     }
+
+
 }
