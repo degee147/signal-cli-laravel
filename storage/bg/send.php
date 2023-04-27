@@ -19,6 +19,7 @@ foreach ($files as $file) {
         if ($output['success']) {
             //keep DB lean
             // $signal->deleteReplied($data['number']);
+            shell_exec('cd /home/ubuntu/laravel/ && php artisan app:clear-read ' . $data['number']);
         }
         unlink($file_path);
         echo json_encode($output);
