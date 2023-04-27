@@ -72,37 +72,17 @@ class SignalController extends Controller
 
     }
 
-    /**
-     * @OA\Post(
-     *     path="/verify",
-     *     summary="Verify a registered phone number using otp from sms",
-     *     operationId="verify",
-     *     description="Send params in form-data. Add Accept:application/json in header",
-     *     @OA\Response(
-     *         response=200,
-     *         description="successful operation",
-     *     ),
-     *     @OA\Parameter(
-     *         name="code",
-     *         in="query",
-     *         description="otp code",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     * )
-     */
-    public function verify(VerificationRequest $request)
-    {
 
-        $input = $request->validated();
-        $updates = (new SignalService())->verify($input['code']);
-        if ($updates['success']) {
-            return $this->AppResponse('success', 'verification successfull', 200);
-        }
-        return response()->json($updates, 400);
-    }
+    // public function verify(VerificationRequest $request)
+    // {
+
+    //     $input = $request->validated();
+    //     $updates = (new SignalService())->verify($input['code']);
+    //     if ($updates['success']) {
+    //         return $this->AppResponse('success', 'verification successfull', 200);
+    //     }
+    //     return response()->json($updates, 400);
+    // }
 
 
     /**
@@ -139,7 +119,8 @@ class SignalController extends Controller
     {
         $input = $request->validated();
 
-        $updates = (new SignalService())->sendMessage($input['phone'], $input['message']);
+        $updates = (new SignalService())->queueMessageSend($input['phone'], $input['message']);
+        // $updates = (new SignalService())->sendMessage($input['phone'], $input['message']);
         if ($updates['success']) {
             //mark all sender's messages as replied
             Message::where('sender', 'like', '%' . $input['phone'])->update(['replied' => true]);
@@ -148,33 +129,13 @@ class SignalController extends Controller
     }
 
 
-    /**
-     * @OA\Post(
-     *     path="/profilename",
-     *     summary="Update profile name of registered phone number",
-     *     operationId="profilename",
-     *     description="Send params in form-data. Add Accept:application/json in header",
-     *     @OA\Response(
-     *         response=200,
-     *         description="successful operation",
-     *     ),
-     *     @OA\Parameter(
-     *         name="name",
-     *         in="query",
-     *         description="name string",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     )
-     * )
-     */
-    public function profilename(ProfileNameRequest $request)
-    {
-        $input = $request->validated();
-        $updates = (new SignalService())->updateProfileName($input['name']);
-        return response()->json($updates, 200);
-    }
+
+    // public function profilename(ProfileNameRequest $request)
+    // {
+    //     $input = $request->validated();
+    //     $updates = (new SignalService())->updateProfileName($input['name']);
+    //     return response()->json($updates, 200);
+    // }
 
     /**
      * @OA\Post(

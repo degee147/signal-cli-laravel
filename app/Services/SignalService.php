@@ -16,8 +16,46 @@ class SignalService
     }
     public function version()
     {
-        return $this->exec("signal-cli version");
+        // return $this->exec("signal-cli version");
+        return ['success' => true, 'output' => "signal-cli 0.11.9.1"];
     }
+
+
+    public function get_path($path_name)
+    {
+        return storage_path() . "/bg/" . $path_name;
+    }
+    public function make_path($path_name)
+    {
+        $dirPath = storage_path() . "/bg/" . $path_name;
+
+        // Check if the directory exists
+        if (!file_exists($dirPath)) {
+            // Create the directory
+            mkdir($dirPath, 0777, true);
+        }
+
+        $save_path = $dirPath . "/output" . mt_rand(11111, 99999) . ".txt";
+
+        // Open a file for reading and writing
+        // $file = fopen($save_path, "w+");
+
+        return $save_path;
+    }
+
+
+
+    public function queueMessageSend($number, $message)
+    {
+        $save_path = $this->make_path('/send');
+        $file = fopen($save_path, 'w');
+        // / Write some text to the file
+        fwrite($file, json_encode(['number' => $number, 'message' => $message]));
+        // Close the file
+        fclose($file);
+        return ['success' => true, 'output' => "message queued for sending to " . $number];
+    }
+
 
     public function sendMessage($number, $message, $save_path = "")
     {
@@ -103,6 +141,7 @@ class SignalService
         // Close the file
         fclose($file);
         $response['output'] = "saved " . $saveCount . " messages";
+        $response['count'] = $saveCount;
         // $response['output'] = $messages;
         // $response['success'] = $messages;
         return $response;

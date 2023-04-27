@@ -43,9 +43,13 @@ class signal extends Command
 
     private function readFiles()
     {
+        echo "reading directory.." . PHP_EOL;
+
         $dir = storage_path() . '/bg/receive'; // replace with the directory you want to scan
 
         $files = scandir($dir);
+
+        echo "found " . count($files) . " files including . and .." . PHP_EOL;
 
         foreach ($files as $file) {
             if ($file !== '.' && $file !== '..') {
@@ -56,7 +60,7 @@ class signal extends Command
                     echo $response['output'] . PHP_EOL;
                 }
 
-                if (file_exists($file_path)) {
+                if (file_exists($file_path) and ($response['count'] > 0)) {
                     unlink($file_path);
                     echo "File deleted successfully." . PHP_EOL;
                 }
