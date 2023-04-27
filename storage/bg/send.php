@@ -27,3 +27,13 @@ foreach ($files as $file) {
 
     }
 }
+
+// clear sent messages responses
+$sentresponses_path = $signal->get_path("/sentresponses");
+$files = scandir($dir);
+foreach ($files as $file) {
+    if ($file !== '.' && $file !== '..') {
+        $file_path = $dir . "/" . $file;
+        unlink($file_path);
+    }
+}
