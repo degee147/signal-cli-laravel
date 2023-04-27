@@ -137,44 +137,24 @@ class SignalController extends Controller
     //     return response()->json($updates, 200);
     // }
 
-    /**
-     * @OA\Post(
-     *     path="/register",
-     *     summary="Endpoint to register phone number. Number has to be set in .env because it's better to use one number at a time with signal",
-     *     operationId="register",
-     *     description="Send params in form-data. Add Accept:application/json in header",
-     *     @OA\Response(
-     *         response=200,
-     *         description="successful operation",
-     *     ),
-     *     @OA\Parameter(
-     *         name="captcha",
-     *         in="query",
-     *         description="captcha gottent from https://signalcaptchas.org/registration/generate.html or https://signalcaptchas.org/challenge/generate.html",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     )
-     * )
-     */
-    public function register(RegisterPhoneRequest $request)
-    {
-        $input = $request->validated();
-        $updates = (new SignalService())->register($input['captcha']);
-        if ($updates['success']) {
-            return $this->AppResponse('success', 'check your phone for otp verfication number', 200);
-        }
-        return response()->json($updates, 400);
-    }
-    public function unregister()
-    {
-        $updates = (new SignalService())->unregister();
-        if ($updates['success']) {
-            return $this->AppResponse('success', 'unregistered', 200);
-        }
-        return response()->json($updates, 400);
-    }
+
+    // public function register(RegisterPhoneRequest $request)
+    // {
+    //     $input = $request->validated();
+    //     $updates = (new SignalService())->register($input['captcha']);
+    //     if ($updates['success']) {
+    //         return $this->AppResponse('success', 'check your phone for otp verfication number', 200);
+    //     }
+    //     return response()->json($updates, 400);
+    // }
+    // public function unregister()
+    // {
+    //     $updates = (new SignalService())->unregister();
+    //     if ($updates['success']) {
+    //         return $this->AppResponse('success', 'unregistered', 200);
+    //     }
+    //     return response()->json($updates, 400);
+    // }
 
 
 

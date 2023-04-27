@@ -50,29 +50,6 @@
                 }
             }
         },
-        "/verify": {
-            "post": {
-                "summary": "Verify a registered phone number using otp from sms",
-                "description": "Send params in form-data. Add Accept:application/json in header",
-                "operationId": "verify",
-                "parameters": [
-                    {
-                        "name": "code",
-                        "in": "query",
-                        "description": "otp code",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
         "/sendmessage": {
             "post": {
                 "summary": "Send a message to user",
@@ -92,52 +69,6 @@
                         "name": "message",
                         "in": "query",
                         "description": "message",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/profilename": {
-            "post": {
-                "summary": "Update profile name of registered phone number",
-                "description": "Send params in form-data. Add Accept:application/json in header",
-                "operationId": "profilename",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "name string",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/register": {
-            "post": {
-                "summary": "Endpoint to register phone number. Number has to be set in .env because it's better to use one number at a time with signal",
-                "description": "Send params in form-data. Add Accept:application/json in header",
-                "operationId": "register",
-                "parameters": [
-                    {
-                        "name": "captcha",
-                        "in": "query",
-                        "description": "captcha gottent from https://signalcaptchas.org/registration/generate.html or https://signalcaptchas.org/challenge/generate.html",
                         "required": true,
                         "schema": {
                             "type": "string"

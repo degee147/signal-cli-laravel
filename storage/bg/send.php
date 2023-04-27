@@ -1,15 +1,12 @@
 <?php
 
 require 'base.php';
-
-
 echo "reading directory.." . PHP_EOL;
 
 $dir = $signal->get_path("/send");
 $sentresponses_path = $signal->make_path("/sentresponses");
 
 $files = scandir($dir);
-
 echo "found " . count($files) . " files including . and .." . PHP_EOL;
 
 foreach ($files as $file) {
