@@ -28,6 +28,8 @@ foreach ($files as $file) {
     }
 }
 
+sleep(3);
+
 // clear sent messages responses
 $sentresponses_path = $signal->get_path("/sentresponses");
 $files = scandir($dir);
