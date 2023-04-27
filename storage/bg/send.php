@@ -16,6 +16,10 @@ foreach ($files as $file) {
         $content = file_get_contents($file_path);
         $data = json_decode($content, true);
         $output = $signal->sendMessage($data['number'], $data['message'], $sentresponses_path);
+        if ($output['success']) {
+            //keep DB lean
+            // $signal->deleteReplied($data['number']);
+        }
         unlink($file_path);
         echo json_encode($output);
 

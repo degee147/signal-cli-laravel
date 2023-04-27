@@ -25,11 +25,13 @@ class SignalService
     {
         // return storage_path() . "/bg/" . $path_name;
         return "/home/ubuntu/laravel/storage/bg/" . $path_name;
+        // return "../../storage/bg/" . $path_name;
     }
     public function make_path($path_name)
     {
         // $dirPath = storage_path() . "/bg/" . $path_name;
         $dirPath = "/home/ubuntu/laravel/storage/bg/" . $path_name;
+        // $dirPath = "../../storage/bg/" . $path_name;
 
         // Check if the directory exists
         if (!file_exists($dirPath)) {
@@ -184,6 +186,10 @@ class SignalService
         return $this->exec("signal-cli -a " . $this->phone . " verify " . $code);
 
     }
+    public function deleteReplied($phone)
+    {
+        return Message::where('sender', 'like', '%' . $phone)->delete();
+    }
     public function listDevices()
     {
         return $this->exec("signal-cli -o json listDevices");
@@ -230,7 +236,12 @@ class SignalService
             $response['success'] = false;
             //  "Command failed to run";
         }
-        $response['output'] = file_get_contents($path);
+
+        try {
+            $response['output'] = file_get_contents($path);
+        } catch (\Exception $e) {
+            $response['output'] = $e->getMessage();
+        }
         return $response;
     }
 
