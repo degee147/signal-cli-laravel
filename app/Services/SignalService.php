@@ -23,11 +23,13 @@ class SignalService
 
     public function get_path($path_name)
     {
-        return storage_path() . "/bg/" . $path_name;
+        // return storage_path() . "/bg/" . $path_name;
+        return "/home/ubuntu/laravel/storage/bg/" . $path_name;
     }
     public function make_path($path_name)
     {
-        $dirPath = storage_path() . "/bg/" . $path_name;
+        // $dirPath = storage_path() . "/bg/" . $path_name;
+        $dirPath = "/home/ubuntu/laravel/storage/bg/" . $path_name;
 
         // Check if the directory exists
         if (!file_exists($dirPath)) {
