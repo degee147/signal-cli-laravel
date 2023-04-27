@@ -18,6 +18,7 @@ foreach ($files as $file) {
         $output = $signal->sendMessage($data['number'], $data['message'], $sentresponses_path);
         if ($output['success']) {
             //keep DB lean
+            //this won't work. Model is not available from command line except through artisan
             // $signal->deleteReplied($data['number']);
             shell_exec('cd /home/ubuntu/laravel/ && php artisan app:clear-read ' . $data['number']);
         }

@@ -33,17 +33,29 @@ class SignalController extends Controller
         return response()->json($updates, 200);
     }
 
-    /**
-     * @OA\Get(
+
+       /**
+     * @OA\Post(
      *     path="/command",
      *     summary="Send a custom command to the Signal CLI",
+     *     operationId="command",
      *     description="List of available commands: addDevice,block,daemon,deleteLocalAccountData,getAttachment,getUserStatus,joinGroup,jsonRpc,link,listAccounts,listContacts,listDevices,listGroups,listIdentities,listStickerPacks,quitGroup,receive,register,remoteDelete,removeContact,removeDevice,removePin,send,sendContacts,sendPaymentNotification,sendReaction,sendReceipt,sendSyncRequest,sendTyping,setPin,submitRateLimitChallenge,trust,unblock,unregister,updateAccount,updateConfiguration,updateContact,updateGroup,updateProfile,uploadStickerPack,verify,version",
      *     @OA\Response(
      *         response=200,
-     *         description="Everything OK"
-     *     )
+     *         description="successful operation",
+     *     ),
+     *     @OA\Parameter(
+     *         name="command",
+     *         in="query",
+     *         description="command string",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
      * )
      */
+
     public function command(CommandRequest $request)
     {
         $input = $request->validated();
