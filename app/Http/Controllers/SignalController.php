@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\SignalService;
 use App\Ultainfinity\Ultainfinity;
 use App\Http\Requests\CommandRequest;
+use App\Http\Resources\MessageResource;
 use App\Http\Requests\ProfileNameRequest;
 use App\Http\Requests\SendMessageRequest;
 use App\Http\Requests\VerificationRequest;
@@ -34,7 +35,7 @@ class SignalController extends Controller
     }
 
 
-       /**
+    /**
      * @OA\Post(
      *     path="/command",
      *     summary="Send a custom command to the Signal CLI",
@@ -80,7 +81,7 @@ class SignalController extends Controller
 
         // $unreadMessages = Message::where('replied', false)->orderBy('id', 'asc')->paginate(10);
         $unreadMessages = Message::where('replied', false)->orderBy('id', 'desc')->get();
-        return response()->json($unreadMessages, 200);
+        return response()->json(MessageResource::collection($unreadMessages), 200);
 
     }
 
@@ -142,31 +143,31 @@ class SignalController extends Controller
 
 
 
-    // public function profilename(ProfileNameRequest $request)
-    // {
-    //     $input = $request->validated();
-    //     $updates = (new SignalService())->updateProfileName($input['name']);
-    //     return response()->json($updates, 200);
-    // }
+// public function profilename(ProfileNameRequest $request)
+// {
+//     $input = $request->validated();
+//     $updates = (new SignalService())->updateProfileName($input['name']);
+//     return response()->json($updates, 200);
+// }
 
 
-    // public function register(RegisterPhoneRequest $request)
-    // {
-    //     $input = $request->validated();
-    //     $updates = (new SignalService())->register($input['captcha']);
-    //     if ($updates['success']) {
-    //         return $this->AppResponse('success', 'check your phone for otp verfication number', 200);
-    //     }
-    //     return response()->json($updates, 400);
-    // }
-    // public function unregister()
-    // {
-    //     $updates = (new SignalService())->unregister();
-    //     if ($updates['success']) {
-    //         return $this->AppResponse('success', 'unregistered', 200);
-    //     }
-    //     return response()->json($updates, 400);
-    // }
+// public function register(RegisterPhoneRequest $request)
+// {
+//     $input = $request->validated();
+//     $updates = (new SignalService())->register($input['captcha']);
+//     if ($updates['success']) {
+//         return $this->AppResponse('success', 'check your phone for otp verfication number', 200);
+//     }
+//     return response()->json($updates, 400);
+// }
+// public function unregister()
+// {
+//     $updates = (new SignalService())->unregister();
+//     if ($updates['success']) {
+//         return $this->AppResponse('success', 'unregistered', 200);
+//     }
+//     return response()->json($updates, 400);
+// }
 
 
 
