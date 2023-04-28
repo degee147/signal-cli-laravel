@@ -75,6 +75,7 @@ class SignalService
         $file = fopen($file_path, "r");
 
         $sender = null;
+        $sender_name = null;
         $receiver = null;
         $receive_timestamp = null;
         $delivered_timestamp = null;
@@ -121,8 +122,12 @@ class SignalService
 
             if (!empty($body) and !empty($sender) and !empty($receiver)) {
 
+                $sender_name = $this->get_string_between($sender, '“', '”');
+                $sender = trim(str_replace('“' . $sender_name . '”', '', $sender));
+
                 $message = [
                     'sender' => $sender,
+                    'sender_name' => $sender_name,
                     'receiver' => $receiver,
                     'receive_timestamp' => $receive_timestamp,
                     'delivered_timestamp' => $delivered_timestamp,
@@ -134,6 +139,7 @@ class SignalService
                 // $messages[] = $message;
 
                 $sender = null;
+                $sender_name = null;
                 $receiver = null;
                 $receive_timestamp = null;
                 $delivered_timestamp = null;
