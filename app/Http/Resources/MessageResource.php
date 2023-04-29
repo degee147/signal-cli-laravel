@@ -20,7 +20,7 @@ class MessageResource extends JsonResource
             'sender' => $this->sender,
             'sender_name' => $this->sender_name,
             'body' => $this->body,
-            'replied' => $this->replied,
+            'replied' => $this->replied == "0" ? false : true,
             'receive_timestamp' => $this->receive_timestamp,
             'delivered_timestamp' => $this->delivered_timestamp,
             'message_timestamp' => $this->message_timestamp,

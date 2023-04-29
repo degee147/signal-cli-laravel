@@ -27,6 +27,20 @@ class SignalService
         return "/home/ubuntu/laravel/storage/bg/" . $path_name;
         // return "../../storage/bg/" . $path_name;
     }
+    public function get_status_file_path($file_name)
+    {
+        return "/home/ubuntu/laravel/storage/bg/" . $file_name;
+    }
+    public function make_status_file($file_name)
+    {
+        $filepath = "/home/ubuntu/laravel/storage/bg/" . $file_name;
+        $file = fopen($filepath, 'w');
+        // / Write some text to the file
+        fwrite($file, $file_name . " status..");
+        // Close the file
+        fclose($file);
+        return $filepath;
+    }
     public function make_path($path_name)
     {
         // $dirPath = storage_path() . "/bg/" . $path_name;
@@ -51,13 +65,14 @@ class SignalService
 
     public function queueMessageSend($number, $message)
     {
-        $save_path = $this->make_path('/send');
+        $save_path = $this->make_path('send');
         $file = fopen($save_path, 'w');
         // / Write some text to the file
         fwrite($file, json_encode(['number' => $number, 'message' => $message]));
         // Close the file
         fclose($file);
-        return ['success' => true, 'output' => "message queued for sending to " . $number];
+        return ['success' => true, 'output' => "message sent to " . $number];
+        // return ['success' => true, 'output' => "message queued for sending to " . $number];
     }
 
 
@@ -194,7 +209,7 @@ class SignalService
     }
     public function deleteReplied($phone)
     {
-        return Message::where('sender', 'like', '%' . $phone)->delete();
+        return Message::where('sender', 'like', '%' . $phone)->where(['replied' => true])->delete();
     }
     public function listDevices()
     {
@@ -226,9 +241,11 @@ class SignalService
     private function exec($command = 'signal-cli', $save_path = '')
     {
 
-        $path = __DIR__ . "/output.txt";
+        // $path = __DIR__ . "/output.txt";
         if (!empty($save_path)) {
             $path = $save_path;
+        } else {
+            $path = $this->make_path('default');
         }
         $command = $command . " > " . $path . " 2>&1";
         $returnValue = null;
@@ -244,7 +261,9 @@ class SignalService
         }
 
         try {
-            $response['output'] = file_get_contents($path);
+            if (file_exists($path)) {
+                $response['output'] = file_get_contents($path);
+            }
         } catch (\Exception $e) {
             $response['output'] = $e->getMessage();
         }
